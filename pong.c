@@ -100,11 +100,11 @@ void handle_ai_movement(struct Pong* pong)
     if (pong->state != PLAY)
         return;
 
-    if (pong->ball.y > pong->player2.y)
+    if (pong->ball.y > (pong->player2.y + PADDLE_HEIGHT / 2))
     {
         pong->player2.vy = PADDLE_SPEED;
     }
-    else if (pong->ball.y < pong->player2.y)
+    else if (pong->ball.y < (pong->player2.y + PADDLE_HEIGHT / 2))
     {
         pong->player2.vy = -PADDLE_SPEED;
     }
