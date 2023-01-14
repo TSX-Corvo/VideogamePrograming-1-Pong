@@ -59,30 +59,17 @@ void handle_input_pong(struct Pong* pong, ALLEGRO_KEYBOARD_STATE* state)
     }
     else if (pong->state == PLAY)
     {
-        if (al_key_down(state, ALLEGRO_KEY_S))
+        if (al_key_down(state, ALLEGRO_KEY_DOWN))
         {
             pong->player1.vy = PADDLE_SPEED;
         }
-        else if (al_key_down(state, ALLEGRO_KEY_W))
+        else if (al_key_down(state, ALLEGRO_KEY_UP))
         {
             pong->player1.vy = -PADDLE_SPEED;
         }
         else
         {
             pong->player1.vy = 0;
-        }
-
-        if (al_key_down(state, ALLEGRO_KEY_DOWN))
-        {
-            pong->player2.vy = PADDLE_SPEED;
-        }
-        else if (al_key_down(state, ALLEGRO_KEY_UP))
-        {
-            pong->player2.vy = -PADDLE_SPEED;
-        }
-        else
-        {
-            pong->player2.vy = 0;
         }
     }
     else
@@ -104,6 +91,26 @@ void handle_input_pong(struct Pong* pong, ALLEGRO_KEYBOARD_STATE* state)
                 pong->serving_player = 1;
             }
         }
+    }
+}
+
+void handle_ai_movement(struct Pong* pong)
+{
+    // Don't do anything if game is not running
+    if (pong->state != PLAY)
+        return;
+
+    if (pong->ball.y > pong->player2.y)
+    {
+        pong->player2.vy = PADDLE_SPEED;
+    }
+    else if (pong->ball.y < pong->player2.y)
+    {
+        pong->player2.vy = -PADDLE_SPEED;
+    }
+    else
+    {
+        pong->player2.vy = 0;
     }
 }
 

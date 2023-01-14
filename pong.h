@@ -41,6 +41,8 @@ void init_pong(struct Pong* pong, struct Sounds* sounds);
 
 void handle_input_pong(struct Pong* pong, ALLEGRO_KEYBOARD_STATE* state);
 
+void handle_ai_movement(struct Pong* pong);
+
 void update_pong(struct Pong* pong, double dt);
 
 void render_pong(struct Pong pong, struct Fonts fonts);

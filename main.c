@@ -74,8 +74,10 @@ int main()
             ALLEGRO_KEYBOARD_STATE keyboard_state;
             al_get_keyboard_state(&keyboard_state);
             handle_input_pong(&pong, &keyboard_state);
-        }
+        }  
 
+        handle_ai_movement(&pong);
+ 
         if (redraw && al_is_event_queue_empty(queue))
         {
             float current_frame_time = al_get_time();
