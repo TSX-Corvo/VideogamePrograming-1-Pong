@@ -8,9 +8,8 @@
     This file contains the definition of the functions to init a pong game,
     update it, and render it.
 */
-
 #include <stdio.h>
-
+#include <math.h>
 #include <allegro5/allegro_primitives.h>
 
 #include "settings.h"
@@ -100,6 +99,19 @@ void handle_ai_movement(struct Pong* pong)
     if (pong->state != PLAY)
         return;
 
+    // Don't chase the ball when its going to the other side
+    // if (pong->ball.vx < 0.f)
+    // {
+    //     if (fabs(pong->player1.y - TABLE_HEIGHT / 2) < 5.f)
+    //         pong->player2.vy = 0;
+    //     else if (pong->player2.y > TABLE_HEIGHT / 2)
+    //         pong->player2.vy = -PADDLE_SPEED;
+    //     else
+    //         pong->player2.vy = PADDLE_SPEED;
+        
+    //     return;
+    // }
+
     if (pong->ball.y > (pong->player2.y + PADDLE_HEIGHT / 2))
     {
         // Move at full speed if ball is currently out of reach
@@ -110,7 +122,7 @@ void handle_ai_movement(struct Pong* pong)
         // Move slower if ball if already within reach, this reduces the jitter
         else
         {
-            pong->player2.vy = PADDLE_SPEED / 2;
+            pong->player2.vy = pong->ball.vy;
         }
     }
     else if (pong->ball.y < (pong->player2.y + PADDLE_HEIGHT / 2))
@@ -121,7 +133,7 @@ void handle_ai_movement(struct Pong* pong)
         }
         else
         {
-            pong->player2.vy = -PADDLE_SPEED / 2;
+            pong->player2.vy = pong->ball.vy;
         }
     }
     else
