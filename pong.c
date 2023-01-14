@@ -102,11 +102,27 @@ void handle_ai_movement(struct Pong* pong)
 
     if (pong->ball.y > (pong->player2.y + PADDLE_HEIGHT / 2))
     {
-        pong->player2.vy = PADDLE_SPEED;
+        // Move at full speed if ball is currently out of reach
+        if (pong->ball.y > pong->player2.y + PADDLE_HEIGHT)
+        {
+            pong->player2.vy = PADDLE_SPEED;
+        }
+        // Move slower if ball if already within reach, this reduces the jitter
+        else
+        {
+            pong->player2.vy = PADDLE_SPEED / 2;
+        }
     }
     else if (pong->ball.y < (pong->player2.y + PADDLE_HEIGHT / 2))
     {
-        pong->player2.vy = -PADDLE_SPEED;
+        if (pong->ball.y < pong->player2.y)
+        {
+            pong->player2.vy = -PADDLE_SPEED;
+        }
+        else
+        {
+            pong->player2.vy = -PADDLE_SPEED / 2;
+        }
     }
     else
     {
